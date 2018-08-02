@@ -1,13 +1,13 @@
 import csv
 import numpy as np
 import random
-
-TRAIN_CSV_PATH = "/Users/Lin/Documents/workspace/pythonArea/Titanic/train.csv"
-TEST_CSV_PATH = "/Users/Lin/Documents/workspace/pythonArea/Titanic/test.csv"
+import sys
 
 
 class Titanic:
-    def __init__(self):
+    def __init__(self, train_path, test_path):
+        self.TRAIN_CSV_PATH = train_path
+        self.TEST_CSV_PATH = test_path
         self.train_psg = []
         self.train_label = []
         self.test_psg = []
@@ -31,7 +31,7 @@ class Titanic:
 
         train_cnt = 0
         skipped_cnt = 0
-        with open(TRAIN_CSV_PATH, 'rt') as csv_file:
+        with open(self.TRAIN_CSV_PATH, 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             for row in reader:
                 if not train_cnt:
@@ -54,7 +54,7 @@ class Titanic:
         print("Total train data: {}, skipped: {}".format(train_cnt, skipped_cnt))
         test_cnt = 0
         skipped_cnt = 0
-        with open(TEST_CSV_PATH, 'rt') as csv_file:
+        with open(self.TEST_CSV_PATH, 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             for row in reader:
                 if not test_cnt:
@@ -132,9 +132,9 @@ class Passenger:
     def get_info(self):
         return [self.pclass, self.sex, self.age, self.sibsp, self.parch]
 
+
 def main():
-    titanic = Titanic()
-    
+    titanic = Titanic(sys.argv[1], sys.argv[2])
 
 if __name__ == "__main__":
     main()
